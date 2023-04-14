@@ -1,5 +1,7 @@
-package com.chatop.api.user;
+package com.chatop.api.services;
 
+import com.chatop.api.models.UserEntity;
+import com.chatop.api.repositories.UserRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class UserService {
     public UserEntity getUserById(Integer id){
         return userRepository
                 .findById(id)
+                .orElseThrow();
+    }
+
+    public UserEntity getUserByEmail(String email){
+        return userRepository
+                .findByEmail(email)
                 .orElseThrow();
     }
 

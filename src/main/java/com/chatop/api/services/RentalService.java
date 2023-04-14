@@ -1,5 +1,8 @@
-package com.chatop.api.rental;
+package com.chatop.api.services;
 
+import com.chatop.api.exceptions.RentalNotFoundException;
+import com.chatop.api.models.RentalEntity;
+import com.chatop.api.repositories.RentalRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

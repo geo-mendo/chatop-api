@@ -1,6 +1,7 @@
-package com.chatop.api.user;
+package com.chatop.api.controllers;
 
-import lombok.Data;
+import com.chatop.api.models.UserEntity;
+import com.chatop.api.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

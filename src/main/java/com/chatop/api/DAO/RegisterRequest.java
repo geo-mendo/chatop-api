@@ -1,4 +1,4 @@
-package com.chatop.api.auth.DAO;
+package com.chatop.api.DAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

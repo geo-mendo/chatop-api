@@ -1,4 +1,4 @@
-package com.chatop.api.user;
+package com.chatop.api.enums;
 
 public enum Role {
 

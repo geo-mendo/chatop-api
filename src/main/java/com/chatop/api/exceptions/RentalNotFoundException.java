@@ -1,4 +1,4 @@
-package com.chatop.api.rental;
+package com.chatop.api.exceptions;
 
 public class RentalNotFoundException extends RuntimeException {
     public RentalNotFoundException(Long id){

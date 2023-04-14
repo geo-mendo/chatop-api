@@ -1,7 +1,7 @@
-package com.chatop.api.user;
+package com.chatop.api.repositories;
 
+import com.chatop.api.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

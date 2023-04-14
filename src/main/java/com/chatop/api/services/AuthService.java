@@ -1,11 +1,11 @@
-package com.chatop.api.auth;
+package com.chatop.api.services;
 
-import com.chatop.api.auth.DAO.AuthRequest;
-import com.chatop.api.auth.DAO.AuthResponse;
-import com.chatop.api.auth.DAO.RegisterRequest;
-import com.chatop.api.user.Role;
-import com.chatop.api.user.UserEntity;
-import com.chatop.api.user.UserRepository;
+import com.chatop.api.DAO.AuthRequest;
+import com.chatop.api.DAO.AuthResponse;
+import com.chatop.api.DAO.RegisterRequest;
+import com.chatop.api.enums.Role;
+import com.chatop.api.models.UserEntity;
+import com.chatop.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,11 +37,11 @@ public class AuthService {
     public AuthResponse authenticate(AuthRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getLogin(),
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var user = userRepository.findByEmail(request.getLogin()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .bearerToken(jwtToken)

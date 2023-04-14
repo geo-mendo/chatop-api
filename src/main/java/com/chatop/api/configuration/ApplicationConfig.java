@@ -1,6 +1,6 @@
-package com.chatop.api.security;
+package com.chatop.api.configuration;
 
-import com.chatop.api.user.UserRepository;
+import com.chatop.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
-package com.chatop.api.auth;
+package com.chatop.api.services;
 
+import com.chatop.api.models.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,7 +24,7 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    public String extractUsername(String token) {
+    public String extractUserEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -58,9 +59,9 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    public boolean isTokenValid(String token, String givenMail) {
+        final String email = extractUserEmail(token);
+        return (email.equals(givenMail)) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

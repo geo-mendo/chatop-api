@@ -1,4 +1,4 @@
-package com.chatop.api.rental;
+package com.chatop.api.models;
 
 import java.lang.*;
 import jakarta.persistence.*;

@@ -1,9 +1,8 @@
-package com.chatop.api.rental;
+package com.chatop.api.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chatop.api.models.RentalEntity;
+import com.chatop.api.services.RentalService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/rentals")
@@ -15,10 +14,6 @@ public class RentalController {
         this.rentalService = rentalService ;
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "test";
-    }
 
     @GetMapping("/")
     public Iterable<RentalEntity> getAllRentals(){

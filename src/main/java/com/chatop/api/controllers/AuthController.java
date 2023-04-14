@@ -1,8 +1,9 @@
-package com.chatop.api.auth;
+package com.chatop.api.controllers;
 
-import com.chatop.api.auth.DAO.AuthRequest;
-import com.chatop.api.auth.DAO.AuthResponse;
-import com.chatop.api.auth.DAO.RegisterRequest;
+import com.chatop.api.services.AuthService;
+import com.chatop.api.DAO.AuthRequest;
+import com.chatop.api.DAO.AuthResponse;
+import com.chatop.api.DAO.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
