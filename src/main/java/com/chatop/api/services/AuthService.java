@@ -1,9 +1,8 @@
 package com.chatop.api.services;
 
-import com.chatop.api.DAO.AuthRequest;
-import com.chatop.api.DAO.AuthResponse;
-import com.chatop.api.DAO.RegisterRequest;
-import com.chatop.api.enums.Role;
+import com.chatop.api.dao.AuthRequest;
+import com.chatop.api.dao.AuthResponse;
+import com.chatop.api.dao.RegisterRequest;
 import com.chatop.api.models.UserEntity;
 import com.chatop.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,8 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         var user = UserEntity.builder()
                 .name(request.getName())
-                .email(request.getEmail())
+                .mail(request.getMail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -41,7 +39,7 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getLogin()).orElseThrow();
+        var user = userRepository.findByMail(request.getLogin()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .bearerToken(jwtToken)

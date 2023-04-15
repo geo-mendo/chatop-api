@@ -1,4 +1,4 @@
-package com.chatop.api.DAO;
+package com.chatop.api.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

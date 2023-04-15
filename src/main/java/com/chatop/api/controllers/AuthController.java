@@ -1,15 +1,18 @@
 package com.chatop.api.controllers;
 
+import com.chatop.api.dao.AuthRequest;
+import com.chatop.api.dao.AuthResponse;
+import com.chatop.api.dao.RegisterRequest;
 import com.chatop.api.services.AuthService;
-import com.chatop.api.DAO.AuthRequest;
-import com.chatop.api.DAO.AuthResponse;
-import com.chatop.api.DAO.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -26,6 +29,7 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(service.register(request));
     }
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticate(
             @RequestBody AuthRequest request
