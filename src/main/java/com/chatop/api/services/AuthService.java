@@ -1,48 +1,77 @@
 package com.chatop.api.services;
 
-import com.chatop.api.dao.AuthRequest;
-import com.chatop.api.dao.AuthResponse;
-import com.chatop.api.dao.RegisterRequest;
+import com.chatop.api.dto.AuthRequestDTO;
+import com.chatop.api.dto.AuthResponseDTO;
+import com.chatop.api.dto.RegisterRequest;
+import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.models.UserEntity;
-import com.chatop.api.repositories.UserRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final UserRepository userRepository;
+    @Autowired
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponseDTO register(RegisterRequest request) {
         var user = UserEntity.builder()
                 .name(request.getName())
-                .mail(request.getMail())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .createdAt(LocalDate.now())
+                .updatedAt(LocalDate.now())
                 .build();
-        userRepository.save(user);
+        userService.createNewUser(user);
         var jwtToken = jwtService.generateToken(user);
-        return AuthResponse.builder()
+        return AuthResponseDTO.builder()
                 .bearerToken(jwtToken)
                 .build();
     }
 
-    public AuthResponse authenticate(AuthRequest request) {
+    public AuthResponseDTO authenticate(AuthRequestDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getLogin(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByMail(request.getLogin()).orElseThrow();
+        var user = userService.getUserByEmail(request.getEmail());
         var jwtToken = jwtService.generateToken(user);
-        return AuthResponse.builder()
+        return AuthResponseDTO.builder()
                 .bearerToken(jwtToken)
                 .build();
+    }
+
+    public UserResponseDTO getCurrentUser(@NonNull HttpServletRequest request) throws ServletException {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new ServletException();
+        }
+        jwt = authHeader.substring(7);
+        userEmail = jwtService.extractUserEmail(jwt);
+        if (userEmail != null) {
+            UserEntity user = userService.getUserByEmail(userEmail);
+            if (jwtService.isTokenValid(jwt, userEmail)) {
+                return userService.mapUserEntityToDTO(user);
+            }
+        }
+        throw new ServletException();
     }
 }

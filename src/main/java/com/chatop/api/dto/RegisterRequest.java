@@ -1,4 +1,4 @@
-package com.chatop.api.dao;
+package com.chatop.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
 
     private String name;
-    private String mail;
+    private String email;
     private String password;
 }

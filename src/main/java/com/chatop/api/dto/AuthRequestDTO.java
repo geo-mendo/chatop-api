@@ -1,4 +1,4 @@
-package com.chatop.api.dao;
+package com.chatop.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
+public class AuthRequestDTO {
 
-    @JsonProperty("login")
-    String login;
+    @JsonProperty("email")
+    String email;
     @JsonProperty("password")
     String password;
 

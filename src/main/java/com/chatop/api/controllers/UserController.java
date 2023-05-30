@@ -1,8 +1,10 @@
 package com.chatop.api.controllers;
 
+import com.chatop.api.dto.UserResponseDTO;
 import com.chatop.api.models.UserEntity;
 import com.chatop.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Integer id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.mapUserEntityToDTO(userService.getUserById(id)));
     }
 
 }
